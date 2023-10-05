@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated } from 'typeorm';
 
 export interface user {
 	private_id: string;
@@ -13,9 +13,11 @@ export interface user {
 @Entity()
 export class UserEntity {
 	@PrimaryGeneratedColumn('uuid')
+	@Generated('uuid')
 	private_id: string;
 
 	@PrimaryGeneratedColumn('uuid')
+	@Generated('uuid')
 	public_id: string;
 
 	@Column({
@@ -30,13 +32,19 @@ export class UserEntity {
 	})
 	date_updated: Date;
 
-	@Column()
+	@Column({
+		default: '',
+	})
 	username: string;
 
-	@Column()
+	@Column({
+		default: '',
+	})
 	password: string;
 
-	@Column()
+	@Column({
+		default: '',
+	})
 	email: string;
 
 	@BeforeUpdate()

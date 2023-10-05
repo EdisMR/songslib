@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated } from 'typeorm';
 
 export interface SongLyricInterface {
 	private_id: string;
@@ -11,9 +11,11 @@ export interface SongLyricInterface {
 @Entity()
 export class SongLyricEntity {
 	@PrimaryGeneratedColumn('uuid')
+	@Generated('uuid')
 	private_id: string;
 
 	@PrimaryGeneratedColumn('uuid')
+	@Generated('uuid')
 	public_id: string;
 
 	@Column({
@@ -29,7 +31,8 @@ export class SongLyricEntity {
 	date_updated: Date;
 
 	@Column({
-		type: 'longtext'
+		type: 'longtext',
+		default: '',
 	})
 	lyric: string;
 

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated } from 'typeorm';
 
 export interface SongInterface {
 	private_id: string;
@@ -17,9 +17,11 @@ export interface SongInterface {
 @Entity()
 export class SongEntity {
 	@PrimaryGeneratedColumn('uuid')
+	@Generated('uuid')
 	private_id: string;
 
 	@PrimaryGeneratedColumn('uuid')
+	@Generated('uuid')
 	public_id: string;
 
 	@Column({
@@ -34,29 +36,37 @@ export class SongEntity {
 	})
 	date_updated: Date;
 
-	@Column()
+	@Column({
+		default: '',
+	})
 	title: string;
 
-	@Column()
+	@Column({
+		default: '',
+	})
 	artist: string;
 
-	@Column()
+	@Column({
+		default: 0,
+	})
 	tempo: number;
 
-	@Column()
+	@Column({
+		default: '',
+	})
 	linkstring: string;
 
 	@Column({
 		type: 'json',
-		default: [],
-		nullable: false,
+		default: "[]",
+		nullable: true,
 	})
 	downloads: string[];
 
 	@Column({
 		type: 'json',
-		default: [],
-		nullable: false,
+		default: "[]",
+		nullable: true,
 	})
 	audioFiles: string[];
 
