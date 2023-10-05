@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated, OneToOne } from 'typeorm';
+import { SongEntity } from './song.entity';
 
 export interface SongLyricInterface {
 	private_id: string;
@@ -30,10 +31,10 @@ export class SongLyricEntity {
 	})
 	date_updated: Date;
 
-	@Column({
-		type: 'longtext',
-		default: '',
-	})
+	@OneToOne(
+		() => SongEntity,
+		(song:SongEntity) => song.lyricRelatedId,
+	)
 	lyric: string;
 
 	@BeforeUpdate()

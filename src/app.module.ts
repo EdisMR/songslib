@@ -7,6 +7,7 @@ import { environment } from './environment/environment';
 import { UserEntity } from './users/entities/user.entity';
 import { SongLyricEntity } from './song/entities/songLyric.entity';
 import { SongEntity } from './song/entities/song.entity';
+import { CommonUtilitiesModule } from './common/common.module';
 @Module({
   imports: [
     UsersModule,
@@ -26,6 +27,7 @@ import { SongEntity } from './song/entities/song.entity';
       ],
       synchronize: true,
     }),
+    CommonUtilitiesModule
   ],
   controllers: [],
   providers: [],
