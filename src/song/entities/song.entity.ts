@@ -1,5 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated, OneToOne } from 'typeorm';
-import { SongLyricEntity } from './songLyric.entity';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated } from 'typeorm';
 
 export interface SongInterface {
 	private_id: string;
@@ -12,7 +11,7 @@ export interface SongInterface {
 	linkstring: string;
 	downloads: string[];
 	audioFiles: string[];
-	lyricRelatedId: string;
+	lyric: string;
 }
 
 @Entity()
@@ -71,11 +70,10 @@ export class SongEntity {
 	})
 	audioFiles: string[];
 
-	@OneToOne(
-		() => SongLyricEntity,
-		(songLyric:SongLyricEntity) => songLyric.public_id
-	)
-	lyricRelatedId: string;
+	@Column({
+		default: '',
+	})
+	lyric: string;
 
 	@BeforeUpdate()
 	updateTimestamp() {

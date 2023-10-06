@@ -1,33 +1,15 @@
 import { commonResponseDto } from "src/common/dto/common-response.dto";
 import { userInterface } from "../entities/user.entity";
 
-export class createUserResponseDto implements commonResponseDto {
-	response_details: {
-		execution_result: boolean;
-		message: string;
-		code: number;
-		params: any;
-	};
+export class createUserResponseDto extends commonResponseDto {
 	data: Omit<userInterface, "password" | "private_id">;
 }
 
-export class getAllUserResponseDto implements commonResponseDto {
-	response_details: {
-		execution_result: boolean;
-		message: string;
-		code: number;
-		params: any;
-	};
+export class getAllUserResponseDto extends commonResponseDto {
 	data: Omit<userInterface, "password" | "private_id">[];
 }
 
-export class getOneUserResponseDto implements commonResponseDto {
-	response_details: {
-		execution_result: boolean;
-		message: string;
-		code: number;
-		params: any;
-	};
+export class getOneUserResponseDto extends commonResponseDto {
 	data: Omit<userInterface, "password" | "private_id">;
 }
 
@@ -39,12 +21,6 @@ export class updateOneUserReqDto {
 	password?: string;
 }
 
-export class updateOneUserRespDto implements commonResponseDto {
-	response_details: {
-		execution_result: boolean;
-		message: string;
-		code: number;
-		params: any;
-	};
+export class updateOneUserRespDto extends commonResponseDto {
 	data: Omit<userInterface, "password" | "private_id">;
 }
