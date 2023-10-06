@@ -156,15 +156,15 @@ export class UsersService {
         public_id: id,
       }, user);
 
-      let user3 = await this.userRepository.findOne({
+      user2 = await this.userRepository.findOne({
         where: {
           public_id: id,
         }
       });
 
-      delete user3.password;
-      delete user3.private_id;
-      response.data = user3;
+      delete user2.password;
+      delete user2.private_id;
+      response.data = user2;
       return response;
     } catch (error) {
       if (id == "" || id == null || id == undefined) {
