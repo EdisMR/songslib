@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated } from 'typeorm';
 
-export interface user {
+export interface userInterface {
 	private_id: string;
 	public_id: string;
 	date_created: Date;
