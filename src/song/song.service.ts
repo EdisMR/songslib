@@ -26,6 +26,7 @@ export class SongService {
         code: 0,
         params: {}
       }
+      delete song.private_id;
       response.data = song;
       return response;
     } catch (e) {
@@ -153,15 +154,20 @@ export class SongService {
     let response = {} as commonResponseDto;
     try {
       response.response_details = {
-        execution_result: true,
-        message: 'Song deleted successfully',
+        execution_result: false,
+        message: 'Song not found',
         code: 0,
         params: {
           identifier: id
         }
       }
       response.data = {};
-      await this.songRepository.delete({ public_id: id });
+      let result = await this.songRepository.delete({ public_id: id });
+
+      if (result.affected > 0) {
+        response.response_details.message = 'Song deleted successfully';
+        response.response_details.execution_result = true;
+      }
       return response;
     } catch (e) {
       if (id == null || id == "" || id == undefined || id == "undefined" || id == "null") {

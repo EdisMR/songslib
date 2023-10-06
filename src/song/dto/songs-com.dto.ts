@@ -23,8 +23,7 @@ export class songPatchDataReqDto implements Partial<SongInterface>{
 	artist: string;
 	tempo: number;
 	linkstring: string;
-	downloads: string[];
-	audioFiles: string[];
+	files: string[];
 	lyric: string;
 }
 
