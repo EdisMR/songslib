@@ -9,8 +9,9 @@ export interface SongInterface {
 	artist: string;
 	tempo: number;
 	linkstring: string;
-	files: string[];
 	lyric: string;
+	files: string[];
+	categories: string[];
 }
 
 @Entity()
@@ -61,6 +62,13 @@ export class SongEntity {
 		nullable: true,
 	})
 	files: string[];
+	
+	@Column({
+		type: 'json',
+		default: "[]",
+		nullable: true,
+	})
+	categories: string[];
 
 	@Column({
 		default: '',
