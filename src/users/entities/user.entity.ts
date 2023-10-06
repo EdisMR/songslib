@@ -8,6 +8,7 @@ export interface userInterface {
 	username: string;
 	password: string;
 	email: string;
+	active:boolean;
 }
 
 @Entity()
@@ -46,6 +47,11 @@ export class UserEntity {
 		default: '',
 	})
 	email: string;
+
+	@Column({
+		default: true,
+	})
+	active: boolean;
 
 	@BeforeUpdate()
 	updateTimestamp() {

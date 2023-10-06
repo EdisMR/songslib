@@ -12,6 +12,7 @@ export interface SongInterface {
 	lyric: string;
 	files: string[];
 	categories: string[];
+	active: boolean;
 }
 
 @Entity()
@@ -74,6 +75,11 @@ export class SongEntity {
 		default: '',
 	})
 	lyric: string;
+
+	@Column({
+		default: true,
+	})
+	active: boolean;
 
 	@BeforeUpdate()
 	updateTimestamp() {
