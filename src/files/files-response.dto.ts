@@ -12,7 +12,8 @@ export class FilesResUploadDto extends commonResponseDto {
 export class FilesResFilterErrorDto extends commonResponseDto {
 	data: {
 		filesize: number,
-		filetype: string
+		filetype: string,
+		fileConditionsDeclaration:any
 	}
 }
 

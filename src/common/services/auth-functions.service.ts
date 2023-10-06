@@ -1,7 +1,7 @@
 import { compare, genSalt, hash } from "bcryptjs";
 
-export function createToken():string {
-	let length:number = 20;
+export function createToken(howMany?:number):string {
+	let length:number = howMany || 20;
 	const characterList:string = "0123456789bcdfghjklmnpqrstvwxyz";
 	let result:string = ""
 	while (length > 0) {

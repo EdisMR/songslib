@@ -3,11 +3,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
 import { environment } from 'src/environment/environment';
-import { v4 as uuidv4 } from 'uuid';
 import { FilesResDeleteDto, FilesResFilterErrorDto, FilesResUploadDto } from './files-response.dto';
 import { FilesService } from './files.service';
 const fileUploadPath = `${path.join(__dirname, environment.fileUploadPath)}`
-
+import { createToken } from 'src/common/services/auth-functions.service';
 
 export const storage = diskStorage({
 	destination: (req, file, cb) => {
@@ -15,7 +14,7 @@ export const storage = diskStorage({
 	},
 	filename: (req, file, cb) => {
 		const extension: string = path.parse(file.originalname).ext
-		const randomName = uuidv4() + '-' + uuidv4() + extension
+		const randomName = createToken(50) + extension;
 		cb(null, randomName)
 	}
 })
@@ -31,7 +30,6 @@ export const fileFilter = (req, file, cb) => {
 	}
 
 	const fileTypesLimitsList = environment.fileTypeAllowed
-
 	const fileSizeLimitsList = environment.fileSizeAllowed
 
 	if (file && file.originalname && file.originalname.length > 0) {
@@ -53,10 +51,8 @@ export const fileFilter = (req, file, cb) => {
 	/* FILE SIZE VALIDATION */
 	/* **************** */
 	const fileSize = Number(parseInt(req.headers["content-length"]))
-	if (isFileAllowed && fileSize > 0) {
-		if (fileSize <= fileSizeLimitsList) {
-			fileConditionsDeclaration.fileSize = true
-		}
+	if ((fileSize > 0) && (fileSize <= fileSizeLimitsList)) {
+		fileConditionsDeclaration.fileSize = true
 	}
 
 	/* **************** */
@@ -91,7 +87,13 @@ export const fileFilter = (req, file, cb) => {
 			},
 			data: {
 				filesize: fileSize,
-				filetype: fileExtension
+				filetype: fileExtension,
+				fileConditionsDeclaration: {
+					fileExistance: fileConditionsDeclaration.fileExistance,
+					fileSize: fileConditionsDeclaration.fileSize,
+					fileType: fileConditionsDeclaration.fileType,
+					fileMimeType: fileMimeType
+				} // !
 			},
 		}
 		/* response to client */
