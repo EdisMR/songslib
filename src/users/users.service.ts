@@ -10,8 +10,8 @@ import { commonResponseDto } from 'src/common/dto/common-response.dto';
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
-    private commonErrorResponse: ErrorReportingService,
+    private readonly userRepository: Repository<UserEntity>,
+    private readonly commonErrorResponse: ErrorReportingService,
   ) { }
 
   async create(): Promise<createUserResponseDto> {
@@ -57,7 +57,6 @@ export class UsersService {
           "date_created",
           "date_updated",
           "username",
-          "password",
           "email"
         ],
       });

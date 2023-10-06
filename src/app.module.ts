@@ -8,6 +8,7 @@ import { UserEntity } from './users/entities/user.entity';
 import { SongLyricEntity } from './song/entities/songLyric.entity';
 import { SongEntity } from './song/entities/song.entity';
 import { CommonUtilitiesModule } from './common/common.module';
+import { AppController } from './app.controller';
 @Module({
   imports: [
     UsersModule,
@@ -26,10 +27,11 @@ import { CommonUtilitiesModule } from './common/common.module';
         SongEntity,
       ],
       synchronize: true,
+      dropSchema: true,
     }),
     CommonUtilitiesModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule { }
