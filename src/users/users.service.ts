@@ -130,12 +130,16 @@ export class UsersService {
 
       /* if password change */
       let requiredPasswordChange = false;
-      if (user.new_password != undefined && user.new_password != null && user.new_password != "" && user.old_password != undefined && user.old_password != null) {
+      if ((user.new_password).length > 0 && (user.old_password.length) >= 0) {
         /* compare passwords */
-        let passwordCheck = await validatePassword({
+        let passwordCheck = false
+        passwordCheck = await validatePassword({
           password: user.old_password,
           hash: user2.password
         });
+        if ((user.old_password).length == 0) {
+          passwordCheck = true;
+        }
         if (passwordCheck == false) {
           response = this.commonErrorResponse.commonErrorResponse(
             'Old password is incorrect',
@@ -152,6 +156,8 @@ export class UsersService {
       }
 
       /* update user */
+      delete user.old_password
+      delete user.new_password
       await this.userRepository.update({
         public_id: id,
       }, user);
@@ -181,9 +187,9 @@ export class UsersService {
     }
   }
 
-  async remove(id: string):Promise<commonResponseDto> {
+  async remove(id: string): Promise<commonResponseDto> {
     let response: commonResponseDto = {} as commonResponseDto;
-    try{
+    try {
       response.response_details = {
         execution_result: true,
         message: "User deleted successfully",
@@ -194,7 +200,7 @@ export class UsersService {
       let execution = await this.userRepository.delete({
         public_id: id,
       });
-      if(execution.affected == 0){
+      if (execution.affected == 0) {
         response = this.commonErrorResponse.commonErrorResponse(
           'User not found',
           {}
