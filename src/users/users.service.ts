@@ -130,7 +130,7 @@ export class UsersService {
 
       /* if password change */
       let requiredPasswordChange = false;
-      if (user.new_password != undefined && user.new_password != null && user.new_password != "" && user.old_password != undefined && user.old_password != null && user.old_password != "") {
+      if (user.new_password != undefined && user.new_password != null && user.new_password != "" && user.old_password != undefined && user.old_password != null) {
         /* compare passwords */
         let passwordCheck = await validatePassword({
           password: user.old_password,
