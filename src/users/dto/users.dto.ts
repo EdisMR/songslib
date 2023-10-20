@@ -19,6 +19,7 @@ export class updateOneUserReqDto {
 	new_password?: string;
 	old_password?: string;
 	password?: string;
+	active?:boolean
 }
 
 export class updateOneUserRespDto extends commonResponseDto {

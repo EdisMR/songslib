@@ -57,7 +57,8 @@ export class UsersService {
           "date_created",
           "date_updated",
           "username",
-          "email"
+          "email",
+          "active"
         ],
       });
       return response;
@@ -77,7 +78,9 @@ export class UsersService {
         execution_result: true,
         message: "User fetched successfully",
         code: 0,
-        params: {},
+        params: {
+          id: id
+        },
       };
       let user = await this.userRepository.findOne({
         where: {
@@ -111,7 +114,7 @@ export class UsersService {
         execution_result: true,
         message: "User updated successfully",
         code: 0,
-        params: {},
+        params: { user: user, id: id },
       };
 
       let user2 = await this.userRepository.findOne({
@@ -130,25 +133,27 @@ export class UsersService {
 
       /* if password change */
       let requiredPasswordChange = false;
-      if ((user.new_password).length > 0 && (user.old_password.length) >= 0) {
-        /* compare passwords */
-        let passwordCheck = false
-        passwordCheck = await validatePassword({
-          password: user.old_password,
-          hash: user2.password
-        });
-        if ((user.old_password).length == 0) {
-          passwordCheck = true;
+      try {
+        if ((user.new_password).length > 0 && (user.old_password.length) >= 0) {
+          /* compare passwords */
+          let passwordCheck = false
+          passwordCheck = await validatePassword({
+            password: user.old_password,
+            hash: user2.password
+          });
+          if ((user.old_password).length == 0) {
+            passwordCheck = true;
+          }
+          if (passwordCheck == false) {
+            response = this.commonErrorResponse.commonErrorResponse(
+              'Old password is incorrect',
+              {}
+            );
+            return response;
+          }
+          requiredPasswordChange = true;
         }
-        if (passwordCheck == false) {
-          response = this.commonErrorResponse.commonErrorResponse(
-            'Old password is incorrect',
-            {}
-          );
-          return response;
-        }
-        requiredPasswordChange = true;
-      }
+      } catch (e){}
 
       if (requiredPasswordChange == true) {
         /* hash new password */
@@ -194,7 +199,7 @@ export class UsersService {
         execution_result: true,
         message: "User deleted successfully",
         code: 0,
-        params: {},
+        params: { id: id },
       };
       response.data = {};
       let execution = await this.userRepository.delete({
