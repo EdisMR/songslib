@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate, Generated, BeforeInsert } from 'typeorm';
 
 export interface SongInterface {
 	private_id: string;
@@ -63,7 +63,7 @@ export class SongEntity {
 		nullable: true,
 	})
 	files: string[];
-	
+
 	@Column({
 		type: 'json',
 		default: "[]",
@@ -80,6 +80,19 @@ export class SongEntity {
 		default: true,
 	})
 	active: boolean;
+
+	@BeforeInsert()
+	inserEasyLink() {
+		let length: number = 4;
+		const characterList: string = "1234567890bcdfghjklmnpqrstvwxyz";
+		let result: string = ""
+		while (length > 0) {
+			var index: number = Math.floor(Math.random() * characterList.length);
+			result += characterList[index];
+			length--;
+		}
+		this.linkstring = result.toUpperCase();
+	}
 
 	@BeforeUpdate()
 	updateTimestamp() {
