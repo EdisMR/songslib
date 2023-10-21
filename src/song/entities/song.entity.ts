@@ -73,6 +73,7 @@ export class SongEntity {
 
 	@Column({
 		default: '',
+		type:'longtext'
 	})
 	lyric: string;
 
