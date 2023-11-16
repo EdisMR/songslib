@@ -20,11 +20,11 @@ export class songPatchDataReqDto implements Partial<SongInterface>{
 	date_created: Date;
 	date_updated: Date;
 	title: string;
-	artist: string;
-	tempo: number;
-	linkstring: string;
-	files: string[];
+	url: string;
 	lyric: string;
+	sources: string[];
+	categories: string[];
+	active: boolean;
 }
 
 export class songPatchDataRespDto extends commonResponseDto {

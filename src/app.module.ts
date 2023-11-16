@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { SongModule } from './song/song.module';
-import { FilesModule } from './files/files.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { environment } from './environment/environment'; 
 import { UserEntity } from './users/entities/user.entity';
@@ -12,7 +11,6 @@ import { AppController } from './app.controller';
   imports: [
     UsersModule,
     SongModule,
-    FilesModule,
     TypeOrmModule.forRoot({
       type: environment.database_type,
       host: environment.database_host,

@@ -6,11 +6,9 @@ export interface SongInterface {
 	date_created: Date;
 	date_updated: Date;
 	title: string;
-	artist: string;
-	tempo: number;
-	linkstring: string;
+	url: string;
 	lyric: string;
-	files: string[];
+	sources: string[];
 	categories: string[];
 	active: boolean;
 }
@@ -45,24 +43,20 @@ export class SongEntity {
 	@Column({
 		default: '',
 	})
-	artist: string;
-
-	@Column({
-		default: 0,
-	})
-	tempo: number;
+	url: string;
 
 	@Column({
 		default: '',
+		type:'longtext'
 	})
-	linkstring: string;
+	lyric: string;
 
 	@Column({
 		type: 'json',
 		default: "[]",
 		nullable: true,
 	})
-	files: string[];
+	sources: string[];
 
 	@Column({
 		type: 'json',
@@ -71,11 +65,7 @@ export class SongEntity {
 	})
 	categories: string[];
 
-	@Column({
-		default: '',
-		type:'longtext'
-	})
-	lyric: string;
+	
 
 	@Column({
 		default: true,
@@ -92,7 +82,7 @@ export class SongEntity {
 			result += characterList[index];
 			length--;
 		}
-		this.linkstring = result.toUpperCase();
+		this.url = result.toUpperCase();
 	}
 
 	@BeforeUpdate()

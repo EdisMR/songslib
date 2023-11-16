@@ -80,7 +80,7 @@ export class SongService {
       }
       response.data = {} as SongEntity;
 
-      let song = await this.songRepository.findOne({ where: [{ public_id: idOrLinkString }, { linkstring: idOrLinkString }] })
+      let song = await this.songRepository.findOne({ where: [{ public_id: idOrLinkString }, { url: idOrLinkString }] })
 
       if (song.public_id != null && song.public_id != "" && song.public_id != undefined) {
         delete song.private_id;
